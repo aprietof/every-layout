@@ -1,0 +1,296 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  --border: 4px solid black;
+  --padding: calc(1rem * 1.4);
+  --border-thick: 4px;
+  padding: 2rem;
+  margin: 0;
+}
+
+img {
+  max-width: 100%;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.wrapper {
+  border-width: var(--border-thick);
+  border: var(--border-thick) solid;
+  padding: var(--padding);
+}
+
+/* Box
+-----------------------------------------------------------------------*/
+.box {
+  display: block;
+  padding: var(--padding);
+  border-width: var(--border-thick);
+  border: var(--border-thick) solid;
+  /* ↓ For high contrast mode */
+  outline: var(--border-thick) solid transparent;
+  outline-offset: calc(var(--border-thick) * -1);
+}
+
+/* The Stack
+-----------------------------------------------------------------------*/
+.stack {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  --space: 1.5rem;
+}
+
+.stack > * + * {
+  margin-top: var(--space);
+}
+
+/* The Center
+-----------------------------------------------------------------------*/
+.center {
+  box-sizing: content-box;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 60ch;
+  /* ↓ Intrinsic Centering: That is, centering elements based on their natural, content-based widths. */
+  /* display: flex;
+  flex-direction: column;
+  align-items: center; */
+
+  /* ↓ Gutters (i.e. 1em) */
+  /* padding-left: 1em;
+  padding-right: 1em; */
+}
+
+/* The Cluster
+-----------------------------------------------------------------------*/
+.cluster {
+  --space: 1rem;
+  overflow: hidden;
+}
+
+.cluster > * {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  margin: calc(var(--space) / 2 * -1);
+}
+
+.cluster > * > * {
+  margin: calc(var(--space) / 2);
+}
+
+/* The Sidebar
+-----------------------------------------------------------------------*/
+
+/* ↓ targets the intermediary wrapper */
+.sidebar {
+  overflow: hidden;
+  --space: 1em;
+  --side-width: 15rem;
+  --content-min: 50%;
+}
+
+.sidebar > * {
+  display: flex;
+  flex-wrap: wrap;
+  margin: calc((var(--space) / 2) * -1);
+}
+
+.sidebar > * > * {
+  flex-basis: var(--side-width);
+  flex-grow: 1;
+  /* ↓ applies to both elements */
+  margin: calc((var(--space) / 2));
+}
+
+/* ↓ if is a right sidebar (side: right) -> :first-child */
+.sidebar > * > :last-child {
+  /* ↓ grow from nothing */
+  flex-basis: 0;
+  flex-grow: 999;
+  min-width: calc(var(--content-min) - var(--space));
+}
+
+/* The Switcher
+-----------------------------------------------------------------------*/
+.switcher {
+  --threshold: 30rem;
+  --space: 1rem;
+  --large: calc(1 + 7 / 10);
+}
+
+.switcher > * {
+  display: flex;
+  flex-wrap: wrap;
+  /* ↓ Multiply by -1 to make negative */
+  margin: calc(var(--space) / 2 * -1);
+}
+
+.switcher > * > * {
+  flex-grow: 1;
+  flex-basis: calc((var(--threshold) - (100% - var(--space))) * 999);
+  /* ↓ Half the value to each element, combining to make the whole */
+  margin: calc(var(--space) / 2);
+}
+
+/* .switcher > * > :nth-child(1) {
+  flex-grow: var(--large);
+} */
+
+.switcher > * > :nth-last-child(n + 4),
+.switcher > * > :nth-last-child(n + 4) ~ * {
+  flex-basis: 100%;
+}
+
+/* The Cover
+-----------------------------------------------------------------------*/
+.cover {
+  --padding: 1rem;
+  --min-height: 50vh;
+  --space: 1rem;
+  display: flex;
+  flex-direction: column;
+  min-height: var(--min-height);
+  /* ↓ noPad padding: 0; */
+  padding: var(--padding);
+}
+
+.cover > * {
+  margin-top: var(--space);
+  margin-bottom: var(--space);
+}
+
+/* ↓ h2 is the centered selector but can be any selector */
+.cover > :first-child:not(h2) {
+  margin-top: 0;
+}
+
+.cover > :last-child:not(h2) {
+  margin-bottom: 0;
+}
+
+/* ↓ h2 is the centered selector but can be any selector */
+.cover > h2 {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+/* The Grid
+-----------------------------------------------------------------------*/
+.grid {
+  --min: 15rem;
+  --space: 1rem;
+  align-content: start;
+  display: grid;
+  gap: var(--space);
+  grid-template-columns: 100%;
+}
+
+/* needs javascript for when the container size is wider than the grid width */
+.grid.aboveMin {
+  grid-template-columns: repeat(auto-fit, minmax(var(--min), 1fr));
+}
+
+/* The Frame
+-----------------------------------------------------------------------*/
+.frame {
+  padding-bottom: calc(var(--n) / var(--d) * 100%);
+  position: relative;
+}
+
+.frame916 {
+  --n: 9;
+  --d: 16;
+}
+
+.frame43 {
+  --n: 3;
+  --d: 4;
+}
+
+.frame-square {
+  --n: 1;
+  --d: 1;
+}
+
+.frame > * {
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.frame > img,
+.frame > video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* The Reel
+-----------------------------------------------------------------------*/
+
+.reel {
+  --space: 1rem;
+  --itemWidth: auto;
+  --height: auto;
+  --trackColor: lightcoral;
+  --thumbColor: #fff;
+  display: flex;
+  /* ↓ For images, which may be very large or use differing aspect ratios, we may want to set the Reel’s height. */
+  height: var(--height);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-color: var(--thumbColor) var(--trackColor);
+}
+
+.reel::-webkit-scrollbar {
+  height: 1rem;
+}
+
+.reel::-webkit-scrollbar-track {
+  background-color: var(--trackColor);
+}
+
+.reel::-webkit-scrollbar-thumb {
+  background-color: var(--trackColor);
+  background-image: linear-gradient(
+    var(--trackColor) 0,
+    var(--trackColor) 0.25rem,
+    var(--thumbColor) 0.25rem,
+    var(--thumbColor) 0.75rem,
+    var(--trackColor) 0.75rem
+  );
+}
+
+.reel > * {
+  flex: 0 0 var(--itemWidth);
+}
+
+.reel > img {
+  height: 100%;
+  flex-basis: auto;
+  width: auto;
+}
+
+.reel > * + * {
+  margin-left: var(--space);
+}
+
+.reel.overflowing {
+  padding-bottom: var(--space);
+}
