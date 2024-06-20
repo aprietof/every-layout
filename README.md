@@ -2,7 +2,7 @@
 
 Minimum HTML/CSS/JS for creating **Heydon Pickering & Andy Bell's** _Every Layouts_.
 
-[Demo 🚀](https://every-layout-basic.netlify.com/)
+[Demo 🚀](https://every-layout-basic.netlify.app/)
 
 ## Getting started
 
